@@ -1,0 +1,29 @@
+﻿@page "/products"
+@using JSandBlazor.services
+@inject JSandBlazor.services.DummyJsonService DummyJsonService
+
+<h3>Products from DummyJSON API:</h3>
+
+<button class="btn btn-primary" @onclick="FetchProducts">Fetch Products</button>
+<ul>
+    @if (products != null)
+    {
+        foreach (var product in products)
+        {
+            <li>
+                <h4>@product.Title</h4>
+                <p>@product.Description</p>
+                <p><strong>Price:</strong> $@product.Price</p>
+            </li>
+        }
+    }
+</ul>
+
+@code {
+    private List<Product> products;
+
+    private async Task FetchProducts()
+    {
+        products = await DummyJsonService.GetProductsAsync();
+    }
+}

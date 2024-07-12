@@ -1,0 +1,33 @@
+﻿@page "/"
+@using JSandBlazor.services
+@inject JSandBlazor.services.JsInterop JsInterop
+
+
+<h3>JavaScript Interop Demo</h3>
+
+<button class="btn btn-primary" @onclick="ShowAlert">Show Alert</button>
+<button class="btn btn-secondary" @onclick="ShowPrompt">Show Prompt</button>
+<button class="btn btn-success" @onclick="InvokeBlazorMethodFromJS">Invoke Blazor Method from JavaScript</button>
+
+@code {
+    private async Task ShowAlert()
+    {
+        await JsInterop.ShowAlert("Hello from Blazor!");
+    }
+
+    private async Task ShowPrompt()
+    {
+        var result = await JsInterop.ShowPrompt("Please enter your name:");
+        if (!string.IsNullOrEmpty(result))
+        {
+            await JsInterop.ShowAlert($"Hello, {result}!");
+        }
+    }
+
+    private async Task InvokeBlazorMethodFromJS()
+    {
+        await JsInterop.InvokeBlazorMethod();
+    }
+
+   
+}
